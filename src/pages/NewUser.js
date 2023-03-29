@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import "./../assets/css/Utils.css";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
-import { addUser } from "./../actions/users.actions";
-import { assignUserToCategory } from "./../actions/categories.actions";
+import { addUser } from "../actions/users.actions";
+import { assignUserToCategory } from "../actions/categories.actions";
 
-const User = () => {
+const NewUser = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.users);
   const categories = useSelector((state) => state.categories);
@@ -26,7 +26,7 @@ const User = () => {
   const genders = ["male", "female"];
 
   const onSubmit = (data) => {
-    const categoryId = data.categoryId;
+    const categoryId = Number(data.categoryId);
     const userId = uuidv4();
 
     const userObj = {
@@ -37,6 +37,7 @@ const User = () => {
     delete userObj.categoryId;
 
     dispatch(addUser(userObj));
+    dispatch(assignUserToCategory({ categoryId, userId }));
   };
 
   return (
@@ -119,4 +120,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default NewUser;

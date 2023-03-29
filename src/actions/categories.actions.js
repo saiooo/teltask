@@ -13,3 +13,7 @@ export const addCat = (payload) => {
 export const getCats = () => {
   return { type: types.GET_CATS };
 };
+
+export const assignUserToCategory = (payload) => {
+  return { type: types.ASSIGN_USER_TO_CATEGORY, payload };
+};

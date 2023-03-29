@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import "./assets/css/App.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
-import User from "./pages/User";
+import NewUser from "./pages/NewUser";
+import Category from "./pages/Category";
 
 const App = () => {
   return (
@@ -12,7 +12,8 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route index path="/" element={<Home />} />
-          <Route index path="/user" element={<User />} />
+          <Route index path="/newUser" element={<NewUser />} />
+          <Route index path="/category/:id" element={<Category />} />
         </Route>
       </Routes>
     </div>

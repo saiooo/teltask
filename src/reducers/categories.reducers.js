@@ -21,6 +21,20 @@ const initialCats = [
     parentCategoryId: null,
     userIDs: [],
   },
+
+  {
+    id: 4,
+    name: "Banana",
+    parentCategoryId: 1,
+    userIDs: [],
+  },
+
+  {
+    id: 5,
+    name: "Skin",
+    parentCategoryId: 4,
+    userIDs: [],
+  },
 ];
 
 const Reducer = (state = initialCats, action) => {
@@ -30,20 +44,15 @@ const Reducer = (state = initialCats, action) => {
     case CatTypes.ADD_CAT:
       return [...state, action.payload];
     case CatTypes.ASSIGN_USER_TO_CATEGORY:
-      const category = state.find(
-        (cat) => cat.id === action.payload.categoryId
-      );
-      if (category) {
-        return state.map((cat) => {
-          if (action.payload.userId) {
-            return {
-              ...cat,
-              userIDs: [...userIDs, action.payload.userId],
-            };
-          }
-          return cat;
-        });
-      }
+      return state.map((cat) => {
+        if (cat.id === action.payload.categoryId && action.payload.userId) {
+          return {
+            ...cat,
+            userIDs: [...cat.userIDs, action.payload.userId],
+          };
+        }
+        return cat;
+      });
     default:
       return state;
   }
