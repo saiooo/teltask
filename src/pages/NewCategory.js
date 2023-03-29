@@ -39,9 +39,9 @@ const NewCategory = () => {
 
     const categoryObj = {
       id: uuidv4(),
-      userId,
       parentCategoryId,
       name: data.name,
+      userIDs: [userId],
     };
 
     dispatch(addCat(categoryObj));
