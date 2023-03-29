@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useForm } from "react-hook-form";
@@ -7,26 +7,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuidv4 } from "uuid";
 import { addUser } from "../actions/users.actions";
 import { assignUserToCategory } from "../actions/categories.actions";
+import { checkIfNumber } from "./../helpers/Helper";
 
 const NewUser = () => {
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users);
   const categories = useSelector((state) => state.categories);
 
-  useEffect(() => {
-    console.log("render new");
-  });
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit } = useForm();
 
   const genders = ["male", "female"];
 
   const onSubmit = (data) => {
-    const categoryId = Number(data.categoryId);
+    const categoryId = checkIfNumber(data.categoryId);
     const userId = uuidv4();
 
     const userObj = {

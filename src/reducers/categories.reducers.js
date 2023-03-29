@@ -5,7 +5,7 @@ const initialCats = [
     id: 1,
     name: "Fruits",
     parentCategoryId: null,
-    userIDs: [],
+    userIDs: [1],
   },
 
   {

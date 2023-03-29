@@ -4,6 +4,7 @@ import "./assets/css/App.css";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import NewUser from "./pages/NewUser";
+import NewCategory from "./pages/NewCategory";
 import Category from "./pages/Category";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
         <Route element={<Layout />}>
           <Route index path="/" element={<Home />} />
           <Route index path="/newUser" element={<NewUser />} />
+          <Route index path="/newCategory" element={<NewCategory />} />
           <Route index path="/category/:id" element={<Category />} />
         </Route>
       </Routes>

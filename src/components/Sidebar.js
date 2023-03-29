@@ -1,37 +1,16 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./../assets/css/Utils.css";
+import { unflatCatList } from "./../helpers/Helper";
 
 const Sidebar = () => {
   const categories = useSelector((state) => state.categories);
   const [arrCats, setArrCats] = useState([]);
 
-  const arrangeCatList = useCallback(() => {
-    const map = new Map();
-    categories.forEach((category) => {
-      map.set(category.id, { ...category, subcategories: [] });
-    });
-
-    categories.forEach((category) => {
-      if (category.parentCategoryId !== null) {
-        const parent = map.get(category.parentCategoryId);
-        parent.subcategories.push(map.get(category.id));
-      }
-    });
-
-    const result = [];
-    map.forEach((value) => {
-      if (value.parentCategoryId === null) {
-        result.push(value);
-      }
-    });
-    return result;
-  }, [categories]);
-
   useEffect(() => {
-    setArrCats(arrangeCatList());
-  }, [arrangeCatList]);
+    setArrCats(unflatCatList(categories));
+  }, [categories]);
 
   const printCatList = (cat) => {
     return (
