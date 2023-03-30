@@ -40,10 +40,16 @@ const Category = () => {
       <h1>Categories list</h1>
       {currentCat && <div>Category name: {currentCat.name}</div>}
       {currentUsers && currentUsers.length > 0 ? (
-        <div>
-          User List:
+        <div className="mt-4">
+          <strong>User List:</strong>
           {currentUsers.map((user) => {
-            return <span key={`user-name-${user.id}`}> {user.name}, </span>;
+            return (
+              <div key={`user-name-${user.id}`} className="mb-3">
+                <div> User name: {user.name}, </div>
+                <div> User email: {user.email}, </div>
+                <div> User age: {user.age} </div>
+              </div>
+            );
           })}
         </div>
       ) : null}

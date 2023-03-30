@@ -5,7 +5,7 @@ const initialUsers = [
     id: 1,
     name: "Julius",
     lastName: "Pavardenis",
-    password: "1234",
+    email: "newemail@email.com",
     age: 27,
     gender: "male",
   },

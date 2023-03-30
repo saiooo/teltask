@@ -20,8 +20,6 @@ const NewCategory = () => {
 
   const [availableCats, setAvailableCats] = useState([]);
 
-  //formState: { errors },
-
   useEffect(() => {
     const twoTierCatList = makeMaxTierCatList(unflatCatList(categories), 2);
     const flatTierList = flatCatList(twoTierCatList); // Make it same as we have in reducer
@@ -29,19 +27,24 @@ const NewCategory = () => {
     setAvailableCats(flatTierList);
   }, [categories]);
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
-    const userId = checkIfNumber(data.userId);
-    const parentCategoryId = data.parentCategoryId
-      ? checkIfNumber(data.parentCategoryId)
-      : null;
+    const userIDs = data.userId === "null" ? [] : [checkIfNumber(data.userId)];
+    const parentCategoryId =
+      data.parentCategoryId === "null"
+        ? null
+        : checkIfNumber(data.parentCategoryId);
 
     const categoryObj = {
       id: uuidv4(),
       parentCategoryId,
       name: data.name,
-      userIDs: [userId],
+      userIDs,
     };
 
     dispatch(addCat(categoryObj));
@@ -51,10 +54,11 @@ const NewCategory = () => {
     <>
       <h1>Category creation form</h1>
 
-      <Form className="mt-20" onSubmit={handleSubmit(onSubmit)}>
+      <Form noValidate className="mt-20" onSubmit={handleSubmit(onSubmit)}>
         <Form.Group className="mb-3">
-          <Form.Label>Choose user to assign to category</Form.Label>
+          <Form.Label>Choose user to assign to category (optional)</Form.Label>
           <Form.Select {...register("userId")}>
+            <option value="null">---No User---</option>
             {users.map((user) => {
               return (
                 <option key={`user-${user.id}`} value={user.id}>
@@ -68,6 +72,7 @@ const NewCategory = () => {
         <Form.Group className="mb-3">
           <Form.Label>Choose parent category (optional)</Form.Label>
           <Form.Select {...register("parentCategoryId")}>
+            <option value="null">---Top Level---</option>
             {availableCats.map((cat) => {
               return (
                 <option key={`cat-${cat.id}`} value={cat.id}>
@@ -79,12 +84,19 @@ const NewCategory = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Enter Category Name</Form.Label>
+          <Form.Label>
+            Enter Category Name <span className="text-danger">*</span>
+          </Form.Label>
           <Form.Control
+            required
             type="text"
             placeholder="Enter category name"
-            {...register("name")}
+            {...register("name", { required: true })}
+            isInvalid={!!errors.name}
           />
+          <Form.Control.Feedback type="invalid">
+            Please enter category name.
+          </Form.Control.Feedback>
         </Form.Group>
 
         <Button variant="primary" type="submit">

@@ -1,0 +1,9 @@
+.header-text {
+    color: white;
+    text-decoration: none;
+}
+
+.header-text:hover {
+    color: white;
+    text-decoration: underline;
+}
