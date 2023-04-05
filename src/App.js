@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import NewUser from "./pages/NewUser";
 import NewCategory from "./pages/NewCategory";
 import Category from "./pages/Category";
+import Page404 from "./pages/Page404";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
       <Routes>
         <Route element={<Layout />}>
           <Route index path="/" element={<Home />} />
+          <Route index path="/*" element={<Page404 />} />
           <Route index path="/newUser" element={<NewUser />} />
           <Route index path="/newCategory" element={<NewCategory />} />
           <Route index path="/category/:id" element={<Category />} />

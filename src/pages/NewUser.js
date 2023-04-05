@@ -19,6 +19,7 @@ const NewUser = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
 
   const genders = ["male", "female"];
@@ -105,7 +106,18 @@ const NewUser = () => {
           <Form.Control
             type="number"
             placeholder="Enter age"
-            {...register("age", { required: true })}
+            {...register("age", {
+              required: true,
+              onBlur: (e) => {
+                let val = Number(e.target.value);
+                if (val < 0) {
+                  setValue("age", 0);
+                }
+                if (val > 150) {
+                  setValue("age", 150);
+                }
+              },
+            })}
             isInvalid={!!errors.age}
           />
           <Form.Control.Feedback type="invalid">
